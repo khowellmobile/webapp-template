@@ -1,11 +1,19 @@
 import classes from "./DefaultLayout.module.css";
+import Menu from "./layout-sections/menu";
 
 /*
  *    The layout component is meant to make it easy to switch in and out pages
  *    without having to worry about positioning a header, menu, footer, etc everytime
  */
 const DefaultLayout = (props) => {
-    return <div className={classes.mainContainer}>{props.children}</div>;
+    return (
+        <div className={classes.mainContainer}>
+            <div className={classes.menuContainer}>
+                <Menu />
+            </div>
+            <div className={classes.contentContainer}>{props.children}</div>
+        </div>
+    );
 };
 
 export default DefaultLayout;
