@@ -5,38 +5,20 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+:root {
+    --primary-color: rgb(42, 42, 209);
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+    --border-color: rgba(128, 128, 128, 0.301);
+    --hover-color: rgba(231, 231, 231, 0.308);
+    --background-color: rgb(255, 255, 255);
+    --secondary-background-color: rgb(255, 255, 255);
+    --tertiary-background-color: rgb(224, 224, 224);
+    --primary-text-color: #1d1d1d;
+    --secondary-text-color: rgb(78, 78, 78);
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+    --base-font-size: 1rem;
+    --small-font-size: 0.9rem;
+    --header-font-size: 1.3rem;
+    --large-header-font-size: 1.4rem;
+    --primary-font: "poppins"
 }
