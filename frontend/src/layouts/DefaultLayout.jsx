@@ -9,16 +9,14 @@ import Menu from "./layout-sections/menu";
 const DefaultLayout = (props) => {
     return (
         <div className={classes.mainContainer}>
-            <div className={classes.menuContainer}>
-                <Menu />
+            <div className={classes.headerContainer}>
+                <Header />
             </div>
-            <div className={classes.rightContainer}>
-                <div className={classes.headerContainer}>
-                    <Header />
+            <div className={classes.bottomContainer}>
+                <div className={classes.menuContainer}>
+                    <Menu />
                 </div>
-                <div className={classes.contentContainer}>
-                    {props.children}
-                </div>
+                <div className={classes.contentContainer}>{props.children}</div>
             </div>
         </div>
     );

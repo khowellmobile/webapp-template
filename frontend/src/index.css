@@ -18,10 +18,11 @@
     --border-color: rgba(128, 128, 128, 0.301);
     --hover-color: rgba(231, 231, 231, 0.308);
     --background-color: rgb(255, 255, 255);
-    --secondary-background-color: rgb(255, 255, 255);
-    --tertiary-background-color: rgb(224, 224, 224);
+    --secondary-background-color: rgb(245, 245, 245);
+    --tertiary-background-color: rgb(235, 235, 235);
     --primary-text-color: #1d1d1d;
     --secondary-text-color: rgb(78, 78, 78);
+    --tertiary-text-color: rgb(150, 150, 150);
 
     --base-font-size: 1rem;
     --small-font-size: 0.9rem;
