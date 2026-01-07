@@ -2,7 +2,7 @@
     width: 100%;
     height: 100%;
 
-    background-color: rgb(20, 20, 20);
+    background-color: var(--background-color);
     border-right: 1px solid var(--border-color);
 
     display: flex;
@@ -37,7 +37,6 @@
 }
 
 .logoSection > p {
-    color: white;
     font-size: var(--large-header-font-size);
     font-weight: 300;
 }
