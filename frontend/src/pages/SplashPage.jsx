@@ -1,6 +1,6 @@
-import classes from "./HomePage.module.css";
+import classes from "./SplashPage.module.css";
 
-const HomePage = () => {
+const SplashPage = () => {
     return (
         <div className={classes.mainContainer}>
             <p>Hello</p>
@@ -8,4 +8,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default SplashPage;
