@@ -24,7 +24,6 @@
     width: 2rem;
 
     display: flex;
-    justify-content: end;
 }
 
 .nameContainer {
@@ -38,7 +37,6 @@
 .icon {
     width: 1.5rem;
     height: 1.5rem;
-    margin-right: 1.5rem;
 
     background-color: rgba(134, 30, 30, 0);
 }
