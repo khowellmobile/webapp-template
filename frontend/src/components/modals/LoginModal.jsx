@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/UseAuth";
 
 import classes from "./LoginModal.module.css";
 
@@ -10,9 +11,21 @@ const LoginModal = ({ handleCloseModal, switchModal }) => {
 
     const navigate = useNavigate();
 
+    const { loginUser } = useAuth();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const result = await loginUser(email, password);
+        if (result.success) {
+            navigate("/home");
+        } else {
+            alert("Login failed!");
+        }
+    };
+
     return (
         <div className={classes.mainContainer}>
-            <form className={classes.form} onSubmit={() => {navigate("/home/")}}>
+            <form className={classes.form} onSubmit={handleSubmit}>
                 <section className={classes.logo}>
                     <b>W</b>
                 </section>
@@ -56,7 +69,8 @@ const LoginModal = ({ handleCloseModal, switchModal }) => {
                     </div>
                 </section>
                 <p>
-                    Forgot your password?<a onClick={() => {}}>Password Reset</a>
+                    Forgot your password?
+                    <a onClick={() => {}}>Password Reset</a>
                 </p>
                 <button type="submit">Login</button>
                 <p>
