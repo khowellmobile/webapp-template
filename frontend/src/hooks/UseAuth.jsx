@@ -7,7 +7,6 @@ export const useAuth = () => {
     const { setUser, setTokens, user, tokens } = useContext(AuthCtx);
 
     const loginUser = async (email, password) => {
-        console.log(email, password);
         const response = await fetch(`${BASE_URL}/api/auth/jwt/create/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
