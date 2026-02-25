@@ -1,6 +1,6 @@
 import classes from "./DefaultLayout.module.css";
 import Header from "./layout-sections/header";
-import Menu from "./layout-sections/menu";
+import Menu from "./layout-sections/Menu";
 
 /*
  *    The layout component is meant to make it easy to switch in and out pages

@@ -1,7 +1,7 @@
 import classes from "./Menu.module.css";
 
-import MenuLineItem from "../../components/utilities/MenuLineItem";
 import { useAuth } from "../../hooks/UseAuth";
+import { Link } from "react-router-dom";
 
 import PenIcon from "../../assets/pen-icon.svg";
 
@@ -34,4 +34,16 @@ const Menu = () => {
     );
 };
 
+const MenuLineItem = ({ itemName, link = null, icon = null, onClick = null }) => {
+    return (
+        <Link to={link} className={classes.lineItemContainer} onClick={onClick}>
+            <div className={classes.logoContainer}>{icon && <div className={classes.icon}>{icon}</div>}</div>
+            <div className={classes.nameContainer}>
+                <p>{itemName}</p>
+            </div>
+        </Link>
+    );
+};
+
 export default Menu;
+export { MenuLineItem };
