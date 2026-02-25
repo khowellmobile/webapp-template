@@ -17,7 +17,7 @@ const LoginModal = ({ handleCloseModal, switchModal }) => {
         e.preventDefault();
         const result = await loginUser(email, password);
         if (result.success) {
-            navigate("/home");
+            navigate("/app/home");
         } else {
             alert("Login failed!");
         }
