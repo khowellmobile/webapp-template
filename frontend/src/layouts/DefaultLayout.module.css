@@ -22,3 +22,10 @@
     width: 15%;
     height: 100%;
 }
+
+.contentContainer {
+    width: 85%;
+    height: 100%;
+
+    background-color: var(--secondary-background-color);
+}

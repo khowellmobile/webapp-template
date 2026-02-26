@@ -39,24 +39,3 @@
     display: flex;
     align-items: center;
 }
-
-.divIcon {
-    width: 2.5rem;
-    height: 2.5rem;
-
-    border-radius: 50%;
-    background-color: var(--primary-color);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.divIcon > p {
-    color: white;
-    font-size: var(--large-header-font-size);
-    font-weight: 600;
-
-    position: relative;
-    top: 0.05rem;
-}

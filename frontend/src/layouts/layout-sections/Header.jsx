@@ -2,6 +2,7 @@ import classes from "./Header.module.css";
 
 import ReactIcon from "../../assets/react.svg";
 import SearchBox from "../../components/utilities/SearchBox";
+import ProfileDropdown from "../../components/utilities/ProfileDropdown";
 
 const Header = () => {
     return (
@@ -16,9 +17,7 @@ const Header = () => {
                 <SearchBox type="text" name="search" value={""} placeholder={"Search"} />
             </div>
             <div className={classes.right}>
-                <div className={classes.divIcon}>
-                    <p>W</p>
-                </div>
+                <ProfileDropdown />
             </div>
         </div>
     );
