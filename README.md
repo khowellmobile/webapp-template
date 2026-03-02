@@ -36,5 +36,14 @@ npm install
 npm run dev
 ```
 
+#### 3. Environment Setup
+Create a .env file in the /frontend directory and add your backend API URL:
+
+Code snippet
+```bash
+VITE_BASE_URL="http://localhost:8000"
+```
+Using an environment file allows the frontend to easily switch between local development and production API endpoints.
+
 ### 📈 Project Status
 This template is currently a **Work in Progress**. It is being optimized to serve as the definitive starting point for React-Django web applications.
