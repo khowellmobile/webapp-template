@@ -7,18 +7,18 @@ const AuthCtx = createContext({
 });
 
 export function AuthCtxProvider(props) {
-    const [ctxAccessToken, setCtxAccessToken] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [ctxUserData, setCtxUserData] = useState({});
     const [ctxAuthLoading, setCtxAuthLoading] = useState(true);
 
     useEffect(() => {
         configureApiClient({
             unauthorizedHandler: () => {
-                setCtxAccessToken(null);
+                setIsAuthenticated(false);
                 setCtxUserData({});
             },
         });
-    }, [ctxAccessToken]);
+    }, [isAuthenticated]);
 
     useEffect(() => {
         let isMounted = true;
@@ -31,10 +31,10 @@ export function AuthCtxProvider(props) {
                     return;
                 }
                 setCtxUserData(profile || {});
-                setCtxAccessToken("cookie-session");
+                setIsAuthenticated(true);
             } catch {
                 if (isMounted) {
-                    setCtxAccessToken(null);
+                    setIsAuthenticated(false);
                     setCtxUserData({});
                 }
             } finally {
@@ -52,8 +52,8 @@ export function AuthCtxProvider(props) {
     }, []);
 
     const context = {
-        ctxAccessToken,
-        setCtxAccessToken,
+        isAuthenticated,
+        setIsAuthenticated,
         ctxUserData,
         setCtxUserData,
         ctxAuthLoading,

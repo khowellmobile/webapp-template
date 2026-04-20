@@ -4,7 +4,7 @@ import AuthCtx from "../contexts/AuthCtx";
 import { api } from "../Client";
 
 export function useAuth() {
-    const { setCtxAccessToken, setCtxUserData } = useContext(AuthCtx);
+    const { setIsAuthenticated, setCtxUserData } = useContext(AuthCtx);
 
     const login = async (email, password) => {
         try {
@@ -26,7 +26,7 @@ export function useAuth() {
                 return { success: false, message: errorMessage };
             }
 
-            setCtxAccessToken("cookie-session");
+            setIsAuthenticated(true);
             await getUser();
             return { success: true, message: "Login successful." };
         } catch (error) {
@@ -40,7 +40,7 @@ export function useAuth() {
         } catch {
             // Even if logout endpoint fails, clear client auth state.
         }
-        setCtxAccessToken(null);
+        setIsAuthenticated(false);
         setCtxUserData({});
     };
 
@@ -48,10 +48,10 @@ export function useAuth() {
         try {
             const returnedProfile = await api.get("/api/profile/");
             setCtxUserData(returnedProfile);
-            setCtxAccessToken("cookie-session");
+            setIsAuthenticated(true);
             return { success: true, data: returnedProfile };
         } catch (e) {
-            setCtxAccessToken(null);
+            setIsAuthenticated(false);
             setCtxUserData({});
             return { success: false, error: e?.message || "Unable to fetch user profile." };
         }
@@ -63,4 +63,3 @@ export function useAuth() {
         getUser,
     };
 }
-
