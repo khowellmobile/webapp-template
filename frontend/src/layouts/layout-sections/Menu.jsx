@@ -1,12 +1,18 @@
 import classes from "./Menu.module.css";
 
 import { useAuth } from "../../hooks/UseAuth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import PenIcon from "../../assets/pen-icon.svg";
 
 const Menu = () => {
     const { logoutUser } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await logoutUser();
+        navigate("/", { replace: true });
+    };
 
     return (
         <div className={classes.mainContainer}>
@@ -26,9 +32,7 @@ const Menu = () => {
                 itemName="Logout"
                 link="/"
                 icon={<img src={PenIcon} alt="Icon" />}
-                onClick={() => {
-                    logoutUser();
-                }}
+                onClick={handleLogout}
             />
         </div>
     );

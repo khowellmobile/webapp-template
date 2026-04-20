@@ -8,4 +8,5 @@ urlpatterns = [
     path('auth/logout/', views.CookieLogoutView.as_view(), name='cookie-logout'),
     path('auth/jwt/create/', views.CookieTokenObtainPairView.as_view(), name='cookie-jwt-create'),
     path('auth/jwt/refresh/', views.CookieTokenRefreshView.as_view(), name='cookie-jwt-refresh'),
+    path('profile/', views.UserProfileAPIView.as_view(), name='user-profile'),
 ]

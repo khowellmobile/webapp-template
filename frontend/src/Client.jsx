@@ -12,11 +12,9 @@ class ApiError extends Error {
     }
 }
 
-let getAccessToken = () => null;
 let onUnauthorized = () => {};
 
 export function configureApiClient({ tokenGetter, unauthorizedHandler }) {
-    getAccessToken = tokenGetter || (() => null);
     onUnauthorized = unauthorizedHandler || (() => {});
 }
 
@@ -47,10 +45,6 @@ function shouldAttachCsrf(method) {
 async function request({ method = "GET", path, query, body, authRequired = true, signal, _retried = false }) {
     const url = buildUrl(path, query);
     const headers = { "Content-Type": "application/json" };
-
-    if (authRequired && getAccessToken()) {
-        // Cookie auth is used; tokenGetter now acts only as authenticated-session marker.
-    }
 
     if (shouldAttachCsrf(method)) {
         const csrfToken = getCookie("csrftoken");

@@ -5,7 +5,7 @@ from rest_framework import exceptions, status
 from rest_framework.authentication import CSRFCheck
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.serializers import (
     TokenObtainPairSerializer,
@@ -13,6 +13,8 @@ from rest_framework_simplejwt.serializers import (
 )
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
+
+from .serializers import UserSerializer
 
 
 def _set_auth_cookies(response, access_token, refresh_token=None):
@@ -146,3 +148,29 @@ class CookieLogoutView(APIView):
         )
         _clear_auth_cookies(response)
         return response
+
+
+class UserProfileAPIView(APIView):
+    """
+    API endpoint to retrieve and update the authenticated user's profile.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        """
+        Retrieves the profile of the authenticated user.
+        """
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+
+    def put(self, request):
+        """
+        Updates the profile of the authenticated user.
+        """
+
+        serializer = UserSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

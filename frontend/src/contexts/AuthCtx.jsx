@@ -1,27 +1,65 @@
 import { createContext, useState, useEffect } from "react";
-
-import { BASE_URL } from "../constants";
+import { api, configureApiClient } from "../Client";
 
 const AuthCtx = createContext({
-    user: null,
-    tokens: null,
-    setUser: () => {},
-    setTokens: () => {},
+    ctxAccessToken: null,
+    ctxUserData: {},
 });
 
-export const AuthCtxProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-    const [tokens, setTokens] = useState(null);
-    const [loading, setLoading] = useState(true);
+export function AuthCtxProvider(props) {
+    const [ctxAccessToken, setCtxAccessToken] = useState(null);
+    const [ctxUserData, setCtxUserData] = useState({});
+    const [ctxAuthLoading, setCtxAuthLoading] = useState(true);
 
-    const contextData = {
-        user,
-        tokens,
-        setUser,
-        setTokens,
+    useEffect(() => {
+        configureApiClient({
+            unauthorizedHandler: () => {
+                setCtxAccessToken(null);
+                setCtxUserData({});
+            },
+        });
+    }, [ctxAccessToken]);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const getUserData = async () => {
+            try {
+                await api.post("/api/auth/refresh/", {}, { authRequired: false });
+                const profile = await api.get("/api/profile/");
+                if (!isMounted) {
+                    return;
+                }
+                setCtxUserData(profile || {});
+                setCtxAccessToken("cookie-session");
+            } catch {
+                if (isMounted) {
+                    setCtxAccessToken(null);
+                    setCtxUserData({});
+                }
+            } finally {
+                if (isMounted) {
+                    setCtxAuthLoading(false);
+                }
+            }
+        };
+
+        getUserData();
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
+
+    const context = {
+        ctxAccessToken,
+        setCtxAccessToken,
+        ctxUserData,
+        setCtxUserData,
+        ctxAuthLoading,
     };
 
-    return <AuthCtx.Provider value={contextData}>{children}</AuthCtx.Provider>;
-};
+    return <AuthCtx.Provider value={context}>{props.children}</AuthCtx.Provider>;
+}
 
 export default AuthCtx;
