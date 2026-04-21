@@ -1,33 +1,65 @@
 import { useContext } from "react";
-
-import AuthCtx from "../contexts/AuthCtx";
 import { BASE_URL } from "../constants";
+import AuthCtx from "../contexts/AuthCtx";
+import { api } from "../Client";
 
-export const useAuth = () => {
-    const { setUser, setTokens, user, tokens } = useContext(AuthCtx);
+export function useAuth() {
+    const { setIsAuthenticated, setCtxUserData } = useContext(AuthCtx);
 
-    const loginUser = async (email, password) => {
-        const response = await fetch(`${BASE_URL}/api/auth/jwt/create/`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username: email, password: password }),
-        });
+    const login = async (email, password) => {
+        try {
+            const response = await fetch(`${BASE_URL}/api/auth/login/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    username: email,
+                    password: password,
+                }),
+            });
 
-        const data = await response.json();
+            if (!response.ok) {
+                const errorData = await response.json();
+                const errorMessage = errorData?.detail || "Login failed please try again.";
+                return { success: false, message: errorMessage };
+            }
 
-        if (response.ok) {
-            setTokens(data);
-            setUser({ email });
-            return { success: true };
-        } else {
-            return { success: false, error: data };
+            setIsAuthenticated(true);
+            await getUser();
+            return { success: true, message: "Login successful." };
+        } catch (error) {
+            return { success: false, message: "A network error occurred. Please try again." };
         }
     };
 
-    const logoutUser = () => {
-        setTokens(null);
-        setUser(null);
+    const logout = async () => {
+        try {
+            await api.post("/api/auth/logout/", {});
+        } catch {
+            // Even if logout endpoint fails, clear client auth state.
+        }
+        setIsAuthenticated(false);
+        setCtxUserData({});
     };
 
-    return { loginUser, logoutUser, user, tokens };
-};
+    const getUser = async () => {
+        try {
+            const returnedProfile = await api.get("/api/profile/");
+            setCtxUserData(returnedProfile);
+            setIsAuthenticated(true);
+            return { success: true, data: returnedProfile };
+        } catch (e) {
+            setIsAuthenticated(false);
+            setCtxUserData({});
+            return { success: false, error: e?.message || "Unable to fetch user profile." };
+        }
+    };
+
+    return {
+        login,
+        logout,
+        getUser,
+    };
+}

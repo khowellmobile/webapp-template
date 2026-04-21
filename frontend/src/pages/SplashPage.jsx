@@ -4,10 +4,13 @@ import LoginModal from "../components/modals/LoginModal";
 import CreateUserModal from "../components/modals/CreateUserModal";
 
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../hooks/UseAuth";
 
 const SplashPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(true);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const { isAuthenticated, isLoading } = useAuth();
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
@@ -26,6 +29,10 @@ const SplashPage = () => {
         setIsCreateModalOpen(false);
         setIsModalOpen(true);
     };
+
+    if (!isLoading && isAuthenticated) {
+        return <Navigate to="/app/home" replace />;
+    }
 
     return (
         <>

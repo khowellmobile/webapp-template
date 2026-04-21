@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "../../hooks/UseAuth";
 
 import classes from "./ProfileDropdown.module.css";
 
@@ -8,6 +9,7 @@ import downChevIcon from "../../assets/chevron-down-icon.svg";
 const ProfileDropdown = ({ val, clickTypeHandler }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
+    const { user } = useAuth();
 
     const propertyTypes = ["commercial", "residential", "multi-unit"];
 
@@ -24,10 +26,10 @@ const ProfileDropdown = ({ val, clickTypeHandler }) => {
         <div>
             <div className={`${classes.mainContainer} ${isExpanded ? classes.expandedStyle : ""}`} onClick={toggle}>
                 <div className={classes.emailDiv}>
-                    <p>admin@gmail.com</p>
+                    <p>{user?.email || user?.username || "Profile"}</p>
                 </div>
                 <div className={classes.divIcon}>
-                    <p>W</p>
+                    <p>{(user?.email || user?.username || "P").slice(0, 1).toUpperCase()}</p>
                 </div>
             </div>
         </div>

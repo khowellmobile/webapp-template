@@ -10,7 +10,9 @@ urlpatterns = [
         "api/",
         include(
             [
-                # These handle: /api/auth/users/ (register, get user), /api/auth/jwt/create/ (login)
+                # Cookie-based auth endpoints and aliases for jwt/create and jwt/refresh.
+                path("", include("accounts.urls")),
+                # Djoser user management endpoints and JWT verify endpoint.
                 path("auth/", include("djoser.urls")),
                 path("auth/", include("djoser.urls.jwt")),
             ]

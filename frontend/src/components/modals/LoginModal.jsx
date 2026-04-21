@@ -11,15 +11,16 @@ const LoginModal = ({ handleCloseModal, switchModal }) => {
 
     const navigate = useNavigate();
 
-    const { loginUser } = useAuth();
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const result = await loginUser(email, password);
+        setMessage("");
+        const result = await login(email, password);
         if (result.success) {
             navigate("/app/home");
         } else {
-            alert("Login failed!");
+            setMessage(result.error?.detail || "Login failed.");
         }
     };
 

@@ -4,9 +4,13 @@ import { Navigate } from "react-router-dom";
 import AuthCtx from "../contexts/AuthCtx";
 
 function ProtectedRoute({ children }) {
-    const { tokens } = useContext(AuthCtx);
+    const { isAuthenticated, ctxAuthLoading } = useContext(AuthCtx);
 
-    if (!tokens) {
+    if (ctxAuthLoading) {
+        return null;
+    }
+
+    if (!isAuthenticated) {
         return <Navigate to="/" replace />;
     }
     return children;
